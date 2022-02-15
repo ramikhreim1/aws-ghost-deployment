@@ -5,7 +5,7 @@
 variable "region" {
   description = "Region where the resources will be deployed"
   type        = string
-  default     = "eu-north-1"
+  default     = "eu-west-3"
 }
 
 variable "tags" {
@@ -35,7 +35,7 @@ variable "vpc_cidr" {
 variable "azs" {
   description = "Availability Zones"
   type        = list(string)
-  default     = ["eu-north-1a", "eu-north-1c"]
+  default     = ["eu-west-3a", "eu-west-3b"]
 }
 
 variable "public_subnets" {

@@ -119,7 +119,7 @@ variable "asg_min_size" {
 variable "website_url" {
   description = "Your ghost website URL, has to match the origin (custom domain OR load balancer DNS Name)"
   type        = string
-  default     = ""
+  default     = "ghost-alb-1155456706.eu-west-3.elb.amazonaws.com"
 }
 
 variable "website_admin_url" {

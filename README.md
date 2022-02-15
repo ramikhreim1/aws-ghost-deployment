@@ -1,15 +1,18 @@
+# ASSIGNMENT FOR THE TECHNICAL INTERVIEW CLOUD ARCHITECT
+
 # AWS Ghost Terraform module
 
-Deploying Ghost 3.0 to AWS using EC2 Auto Scaling, RDS and Terraform
+Deploying Ghost 3.0 to AWS using EC2 Auto Scaling, RDS and Terraform.
 
-## Overview 
+## Overview and Deliverables
 
-Throughout this guide, you will learn how to deploy a Ghost blog on EC2 instances behind an Auto Scaling group, RDS and Terraform for high availability and ease of management. the solution should be able to adapt to traffic spikes, could be increases of up to 4 times the typical load. 
+During the interview i will use this guide to present my solution for Drone Shuttles Ltd buissness case.
+This cover the Architecture design , Security , Documentation. Have deployed a Ghost blog on EC2 instances behind an Auto Scaling group, RDS and Terraform for high availability and ease of management. the solution should be able to adapt to traffic spikes, could be increases of up to 4 times the typical load. 
 
 To make sure that the ASG always keep 1 healthy instance at all time, Buissness case expected that during the new product launch or marketing campaigns there
-could be increases of up to 4 times the typical load. we need to define the asg_min_size and asg_max_size variables value to 4.
+could be increases of up to 4 times the typical load, so i have defined the AutoScaling Group asg_min_size and asg_max_size variables value to 4.
 
-This module will allow you to deploy a single instance behind an Auto Scaling group and RDS using Terraform for high availability and ease of management. It is free tier eligible if you use the right instance sizes.
+This module will allow Drone Shuttles Ltd to deploy a single instance behind an Auto Scaling group and RDS using Terraform for high availability and ease of management. It is free tier eligible if you use the right instance sizes.
 
 
 
@@ -46,12 +49,10 @@ Create snapshots of your Amazon RDS for SQL Server based upon a pre-defined sche
 Copy the snapshots to your DR Region. The frequency of snapshot copying is determined based on the RPO requirement.
 When you test or execute your DR plan in case of a disaster, you can restore the snapshot to a new Amazon RDS for SQL Server instance.
 
-
+# Devops,Devlopment
 Now that our 'base' deployment is done, you might want to integrate custom themes found on the marketplace for your blog. This blog post describes this process, and should be pretty straightforward. But what if our instance fails and get re-created?
 
 Every time you make custom modifications to the theme used and other static content, you can create a custom AMI of your instance and its volume. To do this, go to EC2 > Instances, click on the ghost instance, and at the top right your windows, click on Actions > Image and templates > Create image.
-
-
 You can then enter an image name you can easily identify, and click on Create image. Once this is done, go to EC2 > Images > AMIs to grab your newly created image ID, so we can update our launch configuration to update the image used by our instances and remove the user_data:
 
 asg.tf

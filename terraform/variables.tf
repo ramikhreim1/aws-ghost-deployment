@@ -5,7 +5,7 @@
 variable "region" {
   description = "Region where the resources will be deployed"
   type        = string
-  default     = "eu-west-3"
+  default     = "eu-north-1"
 }
 
 variable "tags" {
@@ -35,7 +35,7 @@ variable "vpc_cidr" {
 variable "azs" {
   description = "Availability Zones"
   type        = list(string)
-  default     = ["eu-west-3a", "eu-west-3b"]
+  default     = ["eu-north-1a", "eu-north-1c"]
 }
 
 variable "public_subnets" {
@@ -81,7 +81,7 @@ variable "mysql_username" {
 variable "mysql_password" {
   description = "MySQL password"
   type        = string
-  default     = ""
+  default     = "P#ssw0rd"
 }
 
 variable "mysql_parameter_group_name" {
@@ -103,7 +103,7 @@ variable "ec2_instance_type" {
 variable "asg_max_size" {
   description = "ASG maximum instance count"
   type        = string
-  default     = 1
+  default     = 4
 }
 
 variable "asg_min_size" {

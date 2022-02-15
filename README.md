@@ -7,19 +7,26 @@ Deploying Ghost 3.0 to AWS using EC2 Auto Scaling, RDS and Terraform.
 ## Overview and Deliverables
 
 During the interview i will use this guide to present my solution for Drone Shuttles Ltd buissness case.
-This cover the Architecture design , Security , Documentation. Have deployed a Ghost blog on EC2 instances behind an Auto Scaling group, RDS and Terraform for high availability and ease of management. the solution should be able to adapt to traffic spikes, could be increases of up to 4 times the typical load. 
+This cover the Architecture design , Security , Documentation. Have deployed a Ghost blog on EC2 instances behind an Auto Scaling group, RDS and Terraform for high availability and ease of management. the solution able to adapt to traffic spikes, and scalabcould be increases of up to 4 times the typical load. 
+
+It is not best practices to write database password in the variables.tf and I won't go into more details here but since this for demo you might find the rds database password.  I will follow the best practice and protect our customers sensitive Input Variables for our future projects.
+
+https://learn.hashicorp.com/tutorials/terraform/sensitive-variables
+
+solution url:
+http://blog.jowry.com/
+
 
 To make sure that the ASG always keep 1 healthy instance at all time, Buissness case expected that during the new product launch or marketing campaigns there
 could be increases of up to 4 times the typical load, so i have defined the AutoScaling Group asg_min_size and asg_max_size variables value to 4.
 
-This module will allow Drone Shuttles Ltd to deploy a single instance behind an Auto Scaling group and RDS using Terraform for high availability and ease of management. It is free tier eligible if you use the right instance sizes.
-
+This module will allow Drone Shuttles Ltd to deploy a single instance behind an Auto Scaling group and RDS using Terraform for high availability and ease of management. 
 
 
 # Enable HTTPS , Application Load Balancer .
 ALB It supports many different features for web applications supports client TLS session termination (http & https, layer 7),the application will return consistent results across sessions.
 
-Its very important and highly recommend that you look into this before you decide to make your application public facing. You will basically need to create a certificate / import it into the Amazon Certificate Manager, validate it, and add it to your new alb HTTPS listener. This process can vary according to your domain register.
+Its very important and highly recommend that you look into this before you decide to make this application public facing. You will basically need to create a certificate / import it into the Amazon Certificate Manager, validate it, and add it to your new alb HTTPS listener. This process can vary according to your domain register.
 
 Still we need to create an HTTPS listener, which uses encrypted connections (also known as SSL offload). This feature enables traffic encryption between your load balancer and the clients that initiate SSL or TLS sessions. Application Load Balancer supports client TLS session termination. This enables you to offload TLS termination tasks to the load balancer, while preserving the source IP address for your back-end applications. You can choose from predefined security policies for your TLS listeners in order to meet compliance and security standards. AWS Certificate Manager (ACM) or AWS Identity and Access Management (IAM) can be used to manage your server certificates.
 

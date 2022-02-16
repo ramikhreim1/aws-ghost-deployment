@@ -13,7 +13,7 @@ It is not best practices to write database password in the variables.tf, since t
 
 https://learn.hashicorp.com/tutorials/terraform/sensitive-variables
 
-solution url:
+Solution url:
 http://blog.jowry.com/
 
 

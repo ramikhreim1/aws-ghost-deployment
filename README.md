@@ -7,54 +7,41 @@ Deploying Ghost 3.0 to AWS using EC2 Auto Scaling, RDS and Terraform.
 ## Overview and Deliverables
 
 During the interview i will use this guide to present my solution for Drone Shuttles Ltd buissness case.
-This cover the Architecture design , Security , Documentation. Have deployed a Ghost blog on EC2 instances behind an Auto Scaling group, RDS and Terraform for high availability and ease of management. the solution able to adapt to traffic spikes, and scalabcould be increases of up to 4 times the typical load. 
+This cover the Architecture design , Security , Documentation.I Have used an automated solution and deployed a Ghost blog on EC2 instances behind an Auto Scaling group, RDS and Terraform for high availability and ease of management. the solution able to adapt to traffic spikes, and scalabcould be increases of up to 4 times the typical load. 
 
-It is not best practices to write database password in the variables.tf and I won't go into more details here but since this for demo you might find the rds database password.  I will follow the best practice and protect our customers sensitive Input Variables for our future projects.
 
-https://learn.hashicorp.com/tutorials/terraform/sensitive-variables
-
-solution url:
+Solution url:
 http://blog.jowry.com/
 
 
-To make sure that the ASG always keep 1 healthy instance at all time, Buissness case expected that during the new product launch or marketing campaigns there
-could be increases of up to 4 times the typical load, so i have defined the AutoScaling Group asg_min_size and asg_max_size variables value to 4.
+To make sure that the ASG always keep 1 healthy instance at all time, Buissness case expected that during the new product launch or marketing campaigns there could be increases of up to 4 times the typical load, so i have defined the AutoScaling Group asg_min_size and asg_max_size variables value to 4.
 
 This module will allow Drone Shuttles Ltd to deploy a single instance behind an Auto Scaling group and RDS using Terraform for high availability and ease of management. 
 
 
-# Enable HTTPS , Application Load Balancer .
-ALB It supports many different features for web applications supports client TLS session termination (http & https, layer 7),the application will return consistent results across sessions.
+# Enable HTTPS , Application Load Balancer used:
+ALB it supports many different features for web applications supports client TLS session termination (http & https, layer 7),the application will return consistent results across sessions.
 
 Its very important and highly recommend that you look into this before you decide to make this application public facing. You will basically need to create a certificate / import it into the Amazon Certificate Manager, validate it, and add it to your new alb HTTPS listener. This process can vary according to your domain register.
 
 Still we need to create an HTTPS listener, which uses encrypted connections (also known as SSL offload). This feature enables traffic encryption between your load balancer and the clients that initiate SSL or TLS sessions. Application Load Balancer supports client TLS session termination. This enables you to offload TLS termination tasks to the load balancer, while preserving the source IP address for your back-end applications. You can choose from predefined security policies for your TLS listeners in order to meet compliance and security standards. AWS Certificate Manager (ACM) or AWS Identity and Access Management (IAM) can be used to manage your server certificates.
 
-Here are some improvements we could make for this Ghost deployment (HTTPS being mandatory):
+# Here are some improvements we could make for this Ghost deployment (HTTPS and Sensitive Variables being mandatory):
 
-Add a Cloudfront Distribution to better deliver our static content, potentially with S3.
+- Add a Cloudfront Distribution to better deliver our static content, potentially with S3.
+- Warning! It is highly recommended that you enable Bucket Versioning on the S3 bucket to allow for state recovery in the case of        accidental deletions and human error.
+- It is not best practices to write database password in the variables.tf, since this for demo and the goal is not to develop an exhaustive and perfect solution with all the bells and whistles, you might find the rds database password.I will follow the best practice and protect our customers sensitive Input Variables for our future projects:
+https://learn.hashicorp.com/tutorials/terraform/sensitive-variables
 
 
 # Diagram
 
 https://lebureau.dev/content/images/2021/05/image_o-26.png 
 
+
 # Cross-Region disaster recovery of Amazon RDS for SQL Server:
 https://aws.amazon.com/blogs/database/cross-region-disaster-recovery-of-amazon-rds-for-sql-server/
 
-In the source Region of my Amazon RDS for SQL Server, we need to performed the following actions:
-Every time you make custom modifications to the theme used and other static content, we can create a custom AMI of our instance and its volume. To do this, go to EC2 > Instances, click on the ghost instance, and at the top right your windows, click on Actions > Image and templates > Create image.
-You can then enter an image name you can easily identify, and click on Create image. Once this is done, go to EC2 > Images > AMIs to grab your newly created image ID, so we can update our launch configuration to update the image used by our instances and remove the user_data:
-
-asg.tf
-
-resource "aws_launch_configuration" "ghost_lc" {
-  name_prefix          = "ghost-lc"
-  image_id             = {custom_ami_id} # Previously the ubuntu image
-  [...]
-  # user_data = [...] 				     # Remove or comment out this block
-  
-You can keep the user_data file in case you need it for a new deployment later on. 
 
 Cross-Region disaster recovery,
 Create snapshots of your Amazon RDS for SQL Server based upon a pre-defined schedule.
@@ -75,11 +62,30 @@ If you have less stringent RTO and RPO requirements for your RDS SQL servers, us
 
 
 
-# Devops,Devlopment
-Now that our 'base' deployment is done, you might want to integrate custom themes found on the marketplace for your blog. This blog post describes this process, and should be pretty straightforward. But what if our instance fails and get re-created?
+# Set up simple continuous integration of Chost theme.
 
+We can use the user_data file in case we need it for a new deployment (Dev,Testing,Production)later on. 
+Set up simple continuous integration of Ghost theme to deploy directly to your Ghost website with GitHub Actions. Share code snippets with GitHub Gists.
+https://ghost.org/integrations/github/
+In the source Region of my Amazon RDS for SQL Server, I recommend to perform the following actions in case Ghost Instance failed and recreated (ASG):
+Every time you make custom modifications to the theme used and other static content, we can create a custom AMI of our instance and its volume. To do this, go to EC2 > Instances, click on the ghost instance, and at the top right your windows, click on Actions > Image and templates > Create image.
+You can then enter an image name you can easily identify, and click on Create image. Once this is done, go to EC2 > Images > AMIs to grab your newly created image ID, so we can update our launch configuration to update the image used by our instances and remove the user_data, 
+ 
 You can keep the user_data file in case you need it for a new deployment later on. 
 
+# maintaining the environment operations tools to help visualising and debugging the state of the environment:
+
+- RDS Performance Insights aggregates performance data. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_PerfInsights.Overview.html
+- AWS Systems Manager is the operations hub for you AWS applications and resource.https://aws.amazon.com/systems-manager/
+- CloudWatch Application Insights helps you monitor your applications that use Amazon EC2 instances along with other application  resources. It identifies and sets up key metrics, logs, and alarms across your application resources and technology stack (for example, your Microsoft SQL Server database, web (IIS) and application servers, OS, load balancers, and queues).
+https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/appinsights-what-is.html
+- Amazon QuickSight https://aws.amazon.com/quicksight/.
+
+# Delete all content of your Ghost blogging platform
+https://hostarmada.com/tutorials/blog-cms/ghost/how-to-delete-all-content-of-your-ghost-blogging-platform/#:~:text=Once%20logged%20in%2C%20please%20access,%E2%80%9CDelete%20all%20content%E2%80%9D%20functionality.
+Unlike other blogging applications which require specific mods or plugins to perform the so-called “Hard Reset”, 
+Ghost has a built-in switch that allows you to delete all the posts and tags with a single click.
+This can be useful when you were working on a project, but you are not happy with how the content turned out, and you would like a fresh start, without having to install a new Ghost instance. Another useful scenario where this functionality can come in handy is when you want to migrate content from a different blog, and you want to wipe the current posts and tags, so they do not interfere with the new stuff you are about to deploy.
 
 
 # Creating an Amazon CloudWatch dashboard to monitor Amazon RDS (Observability).

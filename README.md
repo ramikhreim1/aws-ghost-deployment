@@ -30,6 +30,10 @@ Its very important and highly recommend that you look into this before you decid
 
 Still we need to create an HTTPS listener, which uses encrypted connections (also known as SSL offload). This feature enables traffic encryption between your load balancer and the clients that initiate SSL or TLS sessions. Application Load Balancer supports client TLS session termination. This enables you to offload TLS termination tasks to the load balancer, while preserving the source IP address for your back-end applications. You can choose from predefined security policies for your TLS listeners in order to meet compliance and security standards. AWS Certificate Manager (ACM) or AWS Identity and Access Management (IAM) can be used to manage your server certificates.
 
+Here are some improvements we could make for this Ghost deployment (HTTPS being mandatory):
+
+Add a Cloudfront Distribution to better deliver our static content, potentially with S3.
+
 
 # Diagram
 
@@ -37,29 +41,9 @@ https://lebureau.dev/content/images/2021/05/image_o-26.png
 
 # Cross-Region disaster recovery of Amazon RDS for SQL Server:
 https://aws.amazon.com/blogs/database/cross-region-disaster-recovery-of-amazon-rds-for-sql-server/
-Amazon RDS for SQL Server provides a Multi-AZ deployment, which replicates data synchronously across AZs. This highly available Multi-AZ deployment is usually sufficient for a DR strategy within one region in an AWS cloud environment. 
-In addition, with the in-Region read replica capability of Amazon RDS for SQL Server, you can use read replicas as a warm standby solution in a different AZ. This provides another in-Region DR strategy.
 
-Before you consider a cross-region DR strategy, you need to evaluate whether an in-Region DR solution meets your needs or not.
-
-Recovery point objective (RPO), recovery time objective (RTO), and cost are three key metrics to consider when developing your DR strategy. Based upon these three metrics, you can define your DR strategy ranging from a cold DR (backup and restore) to a hot DR (active to active). A reliable and effective cross-region DR strategy keeps your business in operation with little or no disruption even if an entire region goes offline.
-
-Cross-Region DR strategy
-A cross-Region DR strategy consists of two approaches: snapshot and restore, and continuous replication.
-
-Snapshot and restore
-If you have less stringent RTO and RPO requirements for your RDS SQL servers, using cross-Region snapshot and restore is one of the most cost effective cross-Region DR strategies.
-
-In your source Region of your Amazon RDS for SQL Server, you can perform the following actions:
-
-Create snapshots of your Amazon RDS for SQL Server based upon a pre-defined schedule.
-Copy the snapshots to your DR Region. The frequency of snapshot copying is determined based on the RPO requirement.
-When you test or execute your DR plan in case of a disaster, you can restore the snapshot to a new Amazon RDS for SQL Server instance.
-
-# Devops,Devlopment
-Now that our 'base' deployment is done, you might want to integrate custom themes found on the marketplace for your blog. This blog post describes this process, and should be pretty straightforward. But what if our instance fails and get re-created?
-
-Every time you make custom modifications to the theme used and other static content, you can create a custom AMI of your instance and its volume. To do this, go to EC2 > Instances, click on the ghost instance, and at the top right your windows, click on Actions > Image and templates > Create image.
+In the source Region of my Amazon RDS for SQL Server, we need to performed the following actions:
+Every time you make custom modifications to the theme used and other static content, we can create a custom AMI of our instance and its volume. To do this, go to EC2 > Instances, click on the ghost instance, and at the top right your windows, click on Actions > Image and templates > Create image.
 You can then enter an image name you can easily identify, and click on Create image. Once this is done, go to EC2 > Images > AMIs to grab your newly created image ID, so we can update our launch configuration to update the image used by our instances and remove the user_data:
 
 asg.tf
@@ -70,11 +54,33 @@ resource "aws_launch_configuration" "ghost_lc" {
   [...]
   # user_data = [...] 				     # Remove or comment out this block
   
-You can keep the user_data file in case you need it for a new deployment later on. Don't forget to Terraform apply to validate your changes.
+You can keep the user_data file in case you need it for a new deployment later on. 
 
-Here are some improvements you could make for this Ghost deployment (HTTPS being mandatory):
+Cross-Region disaster recovery,
+Create snapshots of your Amazon RDS for SQL Server based upon a pre-defined schedule.
+Copy the snapshots to your DR Region. The frequency of snapshot copying is determined based on the RPO requirement.
+When you test or execute your DR plan in case of a disaster, you can restore the snapshot to a new Amazon RDS for SQL Server instance.
+Amazon RDS for SQL Server provides a Multi-AZ deployment, which replicates data synchronously across AZs. This highly available Multi-AZ deployment is usually sufficient for a DR strategy within one region in an AWS cloud environment. 
+In addition, with the in-Region read replica capability of Amazon RDS for SQL Server, you can use read replicas as a warm standby solution in a different AZ. This provides another in-Region DR strategy.
 
-Add a Cloudfront Distribution to better deliver our static content, potentially with S3.
+Before you consider a cross-region DR strategy, we need to evaluate whether an in-Region DR solution meets your needs or not.
+
+Recovery point objective (RPO), recovery time objective (RTO), and cost are three key metrics to consider when developing your DR strategy. Based upon these three metrics, you can define your DR strategy ranging from a cold DR (backup and restore) to a hot DR (active to active). A reliable and effective cross-region DR strategy keeps your business in operation with little or no disruption even if an entire region goes offline.
+
+Cross-Region DR strategy
+A cross-Region DR strategy consists of two approaches: snapshot and restore, and continuous replication.
+
+Snapshot and restore
+If you have less stringent RTO and RPO requirements for your RDS SQL servers, using cross-Region snapshot and restore is one of the most cost effective cross-Region DR strategies.
+
+
+
+# Devops,Devlopment
+Now that our 'base' deployment is done, you might want to integrate custom themes found on the marketplace for your blog. This blog post describes this process, and should be pretty straightforward. But what if our instance fails and get re-created?
+
+You can keep the user_data file in case you need it for a new deployment later on. 
+
+
 
 # Creating an Amazon CloudWatch dashboard to monitor Amazon RDS (Observability).
 As a part of Amazon RDS for MySQL database performance monitoring, it’s important to keep an eye on slow query logs and error logs in addition to default monitoring. Slow query logs help you find slow-performing queries in the database so you can investigate the reasons behind the slowness and tune the queries if needed. Error logs help you to find the query errors, which further helps you find the changes in the application due to those errors. However, monitoring these logs manually through log files (on the Amazon RDS console or by downloading locally) is a time-consuming process.

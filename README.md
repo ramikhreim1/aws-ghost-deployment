@@ -9,9 +9,6 @@ Deploying Ghost 3.0 to AWS using EC2 Auto Scaling, RDS and Terraform.
 During the interview i will use this guide to present my solution for Drone Shuttles Ltd buissness case.
 This cover the Architecture design , Security , Documentation.I Have used an automated solution and deployed a Ghost blog on EC2 instances behind an Auto Scaling group, RDS and Terraform for high availability and ease of management. the solution able to adapt to traffic spikes, and scalabcould be increases of up to 4 times the typical load. 
 
-It is not best practices to write database password in the variables.tf, since this for demo and the goal is not to develop an exhaustive and perfect solution with all the bells and whistles, you might find the rds database password.I will follow the best practice and protect our customers sensitive Input Variables for our future projects.
-
-https://learn.hashicorp.com/tutorials/terraform/sensitive-variables
 
 Solution url:
 http://blog.jowry.com/
@@ -29,10 +26,12 @@ Its very important and highly recommend that you look into this before you decid
 
 Still we need to create an HTTPS listener, which uses encrypted connections (also known as SSL offload). This feature enables traffic encryption between your load balancer and the clients that initiate SSL or TLS sessions. Application Load Balancer supports client TLS session termination. This enables you to offload TLS termination tasks to the load balancer, while preserving the source IP address for your back-end applications. You can choose from predefined security policies for your TLS listeners in order to meet compliance and security standards. AWS Certificate Manager (ACM) or AWS Identity and Access Management (IAM) can be used to manage your server certificates.
 
-Here are some improvements we could make for this Ghost deployment (HTTPS being mandatory):
+# Here are some improvements we could make for this Ghost deployment (HTTPS and Sensitive Variables being mandatory):
 
 - Add a Cloudfront Distribution to better deliver our static content, potentially with S3.
 - Warning! It is highly recommended that you enable Bucket Versioning on the S3 bucket to allow for state recovery in the case of        accidental deletions and human error.
+- It is not best practices to write database password in the variables.tf, since this for demo and the goal is not to develop an exhaustive and perfect solution with all the bells and whistles, you might find the rds database password.I will follow the best practice and protect our customers sensitive Input Variables for our future projects:
+https://learn.hashicorp.com/tutorials/terraform/sensitive-variables
 
 
 # Diagram

@@ -132,11 +132,11 @@ Use Terraform to deploy the multiple infrastructure components within AWS.
 
 This will deploy everything from scratch, including:
 
-A VPC with required subnets and other networking components
-An EC2 Auto Scaling group to self heal in case of hardware failure
-An Application Load Balancer to direct trafic to the active instance
-A RDS instance as our managed DB solution.
-Automate the deployment of Install Ghost on instance using the EC2 user data /user_data/ghost_init.sh
+- A VPC with required subnets and other networking components
+- An EC2 Auto Scaling group to self heal in case of hardware failure
+- An Application Load Balancer to direct trafic to the active instance
+- A RDS instance as our managed DB solution.
+- Automate the deployment of Install Ghost on instance using the EC2 user data /user_data/ghost_init.sh
 
 ## Usage
 

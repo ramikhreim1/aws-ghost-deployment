@@ -30,11 +30,13 @@ Still we need to create an HTTPS listener, which uses encrypted connections (als
 
 - Add a Cloudfront Distribution to better deliver our static content, potentially with S3.
 - Warning! It is highly recommended that you enable Bucket Versioning on the S3 bucket to allow for state recovery in the case of accidental deletions and human error.
-- Avoid having secrets in Terraform state, Secrets Management for Terraform
+- Avoid having secrets in Terraform state, You can user Secrets Management for Terraform
 - https://secrethub.io/docs/guides/terraform/
   
-- It is not best practices to write database password in the variables.tf, since this for demo and the goal is not to develop an exhaustive and perfect solution with all the bells and whistles, you might find the rds database password.I will follow the best practice and protect our customers sensitive Input Variables for our future projects:
+- It is not best practices to write database password in the variables.tf, you might find the rds database password but i reset the master user password for my  (Amazon RDS) DB instance by modifying the master user password from RDS console then have edited the ghost DB setup by running (ghost setup) command on the EC2 to provide Ghost my new DB password.
+- 
 https://learn.hashicorp.com/tutorials/terraform/sensitive-variables, https://secrethub.io/docs/guides/terraform/,https://secrethub.io/docs/guides/terraform/
+
 
 
 # Diagram
@@ -86,12 +88,14 @@ https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/appinsights-what-
 
 # Delete all content of your Ghost blogging platform
 https://hostarmada.com/tutorials/blog-cms/ghost/how-to-delete-all-content-of-your-ghost-blogging-platform/#:~:text=Once%20logged%20in%2C%20please%20access,%E2%80%9CDelete%20all%20content%E2%80%9D%20functionality.
+
 Unlike other blogging applications which require specific mods or plugins to perform the so-called “Hard Reset”, 
 Ghost has a built-in switch that allows you to delete all the posts and tags with a single click.
 This can be useful when you were working on a project, but you are not happy with how the content turned out, and you would like a fresh start, without having to install a new Ghost instance. Another useful scenario where this functionality can come in handy is when you want to migrate content from a different blog, and you want to wipe the current posts and tags, so they do not interfere with the new stuff you are about to deploy.
 
 
 # Creating an Amazon CloudWatch dashboard to monitor Amazon RDS (Observability).
+
 As a part of Amazon RDS for MySQL database performance monitoring, it’s important to keep an eye on slow query logs and error logs in addition to default monitoring. Slow query logs help you find slow-performing queries in the database so you can investigate the reasons behind the slowness and tune the queries if needed. Error logs help you to find the query errors, which further helps you find the changes in the application due to those errors. However, monitoring these logs manually through log files (on the Amazon RDS console or by downloading locally) is a time-consuming process.
 
 Pre-requisites:
@@ -124,14 +128,15 @@ The template code located in the project repository (CloudWatchDashboard.json) o
 * Terraform v0.14.x installed
 
 # Deploying the Infrastructure
-We will use Terraform to deploy the multiple infrastructure components within AWS. 
+Use Terraform to deploy the multiple infrastructure components within AWS. 
 
-We will have to deploy everything from scratch, including:
+This will deploy everything from scratch, including:
 
-A VPC with required subnets and other networking components
-An EC2 Auto Scaling group to self heal in case of hardware failure
-An Application Load Balancer to direct trafic to the active instance
-A RDS instance as our managed DB solution.
+- A VPC with required subnets and other networking components
+- An EC2 Auto Scaling group to self heal in case of hardware failure
+- An Application Load Balancer to direct trafic to the active instance
+- A RDS instance as our managed DB solution.
+- Automate the deployment of Install Ghost on instance using the EC2 user data /user_data/ghost_init.sh
 
 ## Usage
 

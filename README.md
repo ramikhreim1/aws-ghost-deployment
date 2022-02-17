@@ -9,14 +9,12 @@ Deploying Ghost 3.0 to AWS using EC2 Auto Scaling, RDS and Terraform.
 During the interview i will use this guide to present my solution for Drone Shuttles Ltd buissness case.
 This cover the Architecture design , Security , Documentation.I Have used an automated solution and deployed a Ghost blog on EC2 instances behind an Auto Scaling group, RDS and Terraform for high availability and ease of management. the solution able to adapt to traffic spikes, and scalabcould be increases of up to 4 times the typical load. 
 
-It is not best practices to write database password in the variables.tf, since this for demo and the goal is not to develop an exhaustive and perfect solution with all the bells and whistles, you might find the rds database password.I will follow the best practice and protect our customers sensitive Input Variables for our future projects.
-
 
 Solution url:
 http://blog.jowry.com/
 
 
-To make sure that the ASG always keep 1 healthy instance at all time, Buissness case expected that during the new product launch or marketing campaigns there could be increases of up to 4 times the typical load, so i have defined the AutoScaling Group asg_min_size and asg_max_size variables value to 4.
+To make sure that the ASG always keep 1 healthy instance at all time, Buissness case expected that during the new product launch or marketing campaigns there could be increases of up to 4 times the typical load, so you can define the AutoScaling Group asg_min_size and asg_max_size variables value to 4.
 
 This module will allow Drone Shuttles Ltd to deploy a single instance behind an Auto Scaling group and RDS using Terraform for high availability and ease of management. 
 
@@ -129,8 +127,6 @@ The template code located in the project repository (CloudWatchDashboard.json) o
   https://aws.amazon.com/blogs/database/creating-an-amazon-cloudwatch-dashboard-to-monitor-amazon-rds-and-amazon-aurora-mysql/
   
   
-
-
 # Requirements
 
 * An AWS account already setup

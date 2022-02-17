@@ -37,8 +37,6 @@ Still we need to create an HTTPS listener, which uses encrypted connections (als
 - 
 https://learn.hashicorp.com/tutorials/terraform/sensitive-variables, https://secrethub.io/docs/guides/terraform/,https://secrethub.io/docs/guides/terraform/
 
--  I reseted the master user password for my Amazon Relational Database Service (Amazon RDS) DB instance by modifying the master user password from RDS console
-   https://aws.amazon.com/premiumsupport/knowledge-center/reset-master-user-password-rds/
 
 
 # Diagram

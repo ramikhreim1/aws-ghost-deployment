@@ -90,12 +90,14 @@ https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/appinsights-what-
 
 # Delete all content of your Ghost blogging platform
 https://hostarmada.com/tutorials/blog-cms/ghost/how-to-delete-all-content-of-your-ghost-blogging-platform/#:~:text=Once%20logged%20in%2C%20please%20access,%E2%80%9CDelete%20all%20content%E2%80%9D%20functionality.
+
 Unlike other blogging applications which require specific mods or plugins to perform the so-called “Hard Reset”, 
 Ghost has a built-in switch that allows you to delete all the posts and tags with a single click.
 This can be useful when you were working on a project, but you are not happy with how the content turned out, and you would like a fresh start, without having to install a new Ghost instance. Another useful scenario where this functionality can come in handy is when you want to migrate content from a different blog, and you want to wipe the current posts and tags, so they do not interfere with the new stuff you are about to deploy.
 
 
 # Creating an Amazon CloudWatch dashboard to monitor Amazon RDS (Observability).
+
 As a part of Amazon RDS for MySQL database performance monitoring, it’s important to keep an eye on slow query logs and error logs in addition to default monitoring. Slow query logs help you find slow-performing queries in the database so you can investigate the reasons behind the slowness and tune the queries if needed. Error logs help you to find the query errors, which further helps you find the changes in the application due to those errors. However, monitoring these logs manually through log files (on the Amazon RDS console or by downloading locally) is a time-consuming process.
 
 Pre-requisites:

@@ -30,11 +30,15 @@ Still we need to create an HTTPS listener, which uses encrypted connections (als
 
 - Add a Cloudfront Distribution to better deliver our static content, potentially with S3.
 - Warning! It is highly recommended that you enable Bucket Versioning on the S3 bucket to allow for state recovery in the case of accidental deletions and human error.
-- Avoid having secrets in Terraform state, Secrets Management for Terraform
+- Avoid having secrets in Terraform state, You can user Secrets Management for Terraform
 - https://secrethub.io/docs/guides/terraform/
   
-- It is not best practices to write database password in the variables.tf, since this for demo and the goal is not to develop an exhaustive and perfect solution with all the bells and whistles, you might find the rds database password.I will follow the best practice and protect our customers sensitive Input Variables for our future projects:
+- It is not best practices to write database password in the variables.tf, you might find the rds database password but i reset the master user password for my  (Amazon RDS) DB instance by modifying the master user password from RDS console then have edited the ghost DB setup by running (ghost setup) command on the EC2 to provide Ghost my new DB password.
+- 
 https://learn.hashicorp.com/tutorials/terraform/sensitive-variables, https://secrethub.io/docs/guides/terraform/,https://secrethub.io/docs/guides/terraform/
+
+-  I reseted the master user password for my Amazon Relational Database Service (Amazon RDS) DB instance by modifying the master user password from RDS console
+   https://aws.amazon.com/premiumsupport/knowledge-center/reset-master-user-password-rds/
 
 
 # Diagram

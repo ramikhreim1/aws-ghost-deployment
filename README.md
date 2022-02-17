@@ -149,12 +149,13 @@ This will deploy everything from scratch, including:
 * Export your AWS credentials using the CLI or tools like Awsume
 * Provide your remote state information in backend.tf i used s3 as my default backend since its a demo project s3 server-side encryption with AWS Key Management Service (SSE-KMS) not enabled during this demo, its highy recommended to consider in the futures projects.
   
-* Update all the default values in variables.tf 
+* Update all the default values in variables.tf such as the website URL.
 * Go to the terraform folder and apply the code
-```
+
 cd terraform
 terraform init
 terraform apply
-```
 
 
+To access your blog, you will need to retrieve the DNS name of your application load balancer, in EC2 > Load Balancers > Description. You can also use your registered domain name if you setup a CNAME record pointing at the load balancer DNS name.
+  

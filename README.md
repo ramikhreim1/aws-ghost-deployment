@@ -29,9 +29,12 @@ Still we need to create an HTTPS listener, which uses encrypted connections (als
 # Here are some improvements we could make for this Ghost deployment (HTTPS and Sensitive Variables being mandatory):
 
 - Add a Cloudfront Distribution to better deliver our static content, potentially with S3.
-- Warning! It is highly recommended that you enable Bucket Versioning on the S3 bucket to allow for state recovery in the case of        accidental deletions and human error.
+- Warning! It is highly recommended that you enable Bucket Versioning on the S3 bucket to allow for state recovery in the case of accidental deletions and human error.
+- Avoid having secrets in Terraform state, Secrets Management for Terraform
+- https://secrethub.io/docs/guides/terraform/
+  
 - It is not best practices to write database password in the variables.tf, since this for demo and the goal is not to develop an exhaustive and perfect solution with all the bells and whistles, you might find the rds database password.I will follow the best practice and protect our customers sensitive Input Variables for our future projects:
-https://learn.hashicorp.com/tutorials/terraform/sensitive-variables
+https://learn.hashicorp.com/tutorials/terraform/sensitive-variables, https://secrethub.io/docs/guides/terraform/,https://secrethub.io/docs/guides/terraform/
 
 
 # Diagram

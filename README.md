@@ -67,13 +67,13 @@ If you have less stringent RTO and RPO requirements for your RDS SQL servers, us
 We can use the user_data file in case we need it for a new deployment (Dev,Testing,Production)later on. 
 Set up simple continuous integration of Ghost theme to deploy directly to your Ghost website with GitHub Actions. Share code snippets with GitHub Gists.
 https://ghost.org/integrations/github/
-In the source Region of my Amazon RDS for SQL Server, I recommend to perform the following actions in case Ghost Instance failed and recreated (ASG):
-Every time you make custom modifications to the theme used and other static content, we can create a custom AMI of our instance and its volume. To do this, go to EC2 > Instances, click on the ghost instance, and at the top right your windows, click on Actions > Image and templates > Create image.
+
+In the source Region of my Amazon RDS for SQL Server, I recommend to perform the following actions in case Ghost Instance failed and recreated (ASG), every time you make custom modifications to the theme used and other static content, we can create a custom AMI of our instance and its volume. To do this, go to EC2 > Instances, click on the ghost instance, and at the top right your windows, click on Actions > Image and templates > Create image.
 You can then enter an image name you can easily identify, and click on Create image. Once this is done, go to EC2 > Images > AMIs to grab your newly created image ID, so we can update our launch configuration to update the image used by our instances and remove the user_data, 
  
 You can keep the user_data file in case you need it for a new deployment later on. 
 
-# maintaining the environment operations tools to help visualising and debugging the state of the environment:
+# maintaining and operations tools to help visualising and debugging the state of the environment:
 
 - RDS Performance Insights aggregates performance data. https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_PerfInsights.Overview.html
 - AWS Systems Manager is the operations hub for you AWS applications and resource.https://aws.amazon.com/systems-manager/

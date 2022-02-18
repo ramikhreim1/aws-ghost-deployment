@@ -83,9 +83,6 @@ https://github.com/marketplace/actions/deploy-ghost-theme
 
 In the source Region of my Amazon RDS for SQL Server, I recommend to perform the following actions in case Ghost Instance failed and recreated (ASG), every time you make custom modifications to the theme used and other static content, we can create a custom AMI of our instance and its volume. To do this, go to EC2 > Instances, click on the ghost instance, and at the top right your windows, click on Actions > Image and templates > Create image.
 
-In the source Region of my Amazon RDS for SQL Server, I recommend to perform the following actions in case Ghost Instance failed and recreated (ASG):
-Every time you make custom modifications to the theme used and other static content, we can create a custom AMI of our instance and its volume. To do this, go to EC2 > Instances, click on the ghost instance, and at the top right your windows, click on Actions > Image and templates > Create image.
-
 You can then enter an image name you can easily identify, and click on Create image. Once this is done, go to EC2 > Images > AMIs to grab your newly created image ID, so we can update our launch configuration to update the image used by our instances and remove the user_data, 
  
 You can keep the user_data file in case you need it for a new deployment later on. 

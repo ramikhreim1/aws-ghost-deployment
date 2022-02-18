@@ -76,6 +76,9 @@ We can use the user_data file in case we need it for a new deployment (Dev,Testi
 Set up simple continuous integration of Ghost theme to deploy directly to your Ghost website with GitHub Actions. Share code snippets with GitHub Gists.
 https://ghost.org/integrations/github/
 
+This GitHub action allows you to automatically build and deploy your Ghost Theme from GitHub to any Ghost install, via the Ghost Admin API!
+https://github.com/marketplace/actions/deploy-ghost-theme
+
 
 In the source Region of my Amazon RDS for SQL Server, I recommend to perform the following actions in case Ghost Instance failed and recreated (ASG), every time you make custom modifications to the theme used and other static content, we can create a custom AMI of our instance and its volume. To do this, go to EC2 > Instances, click on the ghost instance, and at the top right your windows, click on Actions > Image and templates > Create image.
 

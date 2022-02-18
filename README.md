@@ -73,6 +73,7 @@ If you have less stringent RTO and RPO requirements for your RDS SQL servers, us
 # Set up simple continuous integration of Chost theme.
 
 We can use the user_data file in case we need it for a new deployment (Dev,Testing,Production)later on. 
+
 Set up simple continuous integration of Ghost theme to deploy directly to your Ghost website with GitHub Actions. Share code snippets with GitHub Gists.
 https://ghost.org/integrations/github/
 

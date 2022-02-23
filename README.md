@@ -37,8 +37,6 @@ Still we need to create an HTTPS listener, which uses encrypted connections (als
 
  https://learn.hashicorp.com/tutorials/terraform/sensitive-variables, https://secrethub.io/docs/guides/terraform/,https://secrethub.io/docs/guides/terraform/
 
-- Add a Cloudfront Distribution to better deliver our static content, potentially with S3.
-- It is highly recommended that you enable Bucket Versioning on the S3 bucket to allow for state recovery in the case of accidental deletions and human error.
 
 
 

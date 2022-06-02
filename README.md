@@ -1,4 +1,4 @@
-# ASSIGNMENT FOR THE TECHNICAL INTERVIEW CLOUD ARCHITECT
+
 
 # AWS Ghost Terraform module
 
@@ -6,7 +6,7 @@ Deploying Ghost 3.0 to AWS using EC2 Auto Scaling, RDS and Terraform.
 
 ## Overview and Deliverables
 
-During the interview i will use this guide to present my solution for Drone Shuttles Ltd buissness case.
+
 This cover the Architecture design , Security , Documentation.I Have used an automated solution and deployed a Ghost blog on EC2 instances behind an Auto Scaling group, RDS and Terraform for high availability and ease of management. the solution able to adapt to traffic spikes, and scalabcould be increases of up to 4 times the typical load. 
 
 
@@ -16,7 +16,7 @@ http://blog.jowry.com/
 
 To make sure that the ASG always keep 1 healthy instance at all time, Buissness case expected that during the new product launch or marketing campaigns there could be increases of up to 4 times the typical load, so you can define the AutoScaling Group asg_min_size and asg_max_size variables value to 4.
 
-This module will allow Drone Shuttles Ltd to deploy a single instance behind an Auto Scaling group and RDS using Terraform for high availability and ease of management. 
+This module will allow deploy a single instance behind an Auto Scaling group and RDS using Terraform for high availability and ease of management. 
 
 
 # Enable HTTPS , Application Load Balancer used:

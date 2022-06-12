@@ -11,7 +11,7 @@ This cover the Architecture design , Security , Documentation.I Have used an aut
 
 
 Solution url:
-http://blog.jowry.com/
+http://blog.jowry.click/
 
 
 To make sure that the ASG always keep 1 healthy instance at all time, Buissness case expected that during the new product launch or marketing campaigns there could be increases of up to 4 times the typical load, so you can define the AutoScaling Group asg_min_size and asg_max_size variables value to 4.

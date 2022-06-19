@@ -42,7 +42,10 @@ Still we need to create an HTTPS listener, which uses encrypted connections (als
 
 # Diagram
 
-https://lebureau.dev/content/images/2021/05/image_o-26.png 
+![diagram](https://user-images.githubusercontent.com/99683327/174469165-902de1c0-2537-462c-88f3-70185583dacf.png)
+![ghost](https://user-images.githubusercontent.com/99683327/174469174-03048ce5-4e01-4d2e-9f83-d6924754b3b7.jpg)
+
+
 
 
 # Cross-Region disaster recovery of Amazon RDS for SQL Server:
